@@ -518,6 +518,7 @@ button {
   justify-content: space-between;
   padding-right: 0px;
 
+
   span {
     font-weight: bold;
     font-size: 1.7rem;
@@ -1002,6 +1003,7 @@ button {
     justify-content: center;
 
     .not-found-404 {
+      text-align: center;
       font-size: 5rem;
       font-weight: 500;
     }
@@ -1108,7 +1110,18 @@ button {
 @media (max-width: 768px) {
 
   .main-container {
-    padding-left: 2px !important;
+    padding: 20px 10px;
+
+  }
+
+  .cart-box1 {
+    padding: 15px 0px;
+  }
+
+  .left-right-toggle {
+    button {
+      margin-right: 0px !important;
+    }
   }
 
   .navbar-container {
@@ -1119,6 +1132,20 @@ button {
     padding-bottom: 0.5rem;
   }
 
+  .brandLogoBox {
+    img {
+      height: 40px;
+    }
+
+    .logo {
+      font-size: 18px;
+    }
+  }
+
+  .nav-item {
+    font-size: 0.6rem;
+  }
+
   .navbar-left {
     width: 100%;
     justify-content: space-between;
@@ -1127,6 +1154,7 @@ button {
 
   .menus {
     /* display: none; */
+    gap: 12px !important;
   }
 
   .search-input-box {
@@ -1176,7 +1204,7 @@ button {
 
   .customer-supports-benifits {
     flex-direction: column;
-    gap: 20px;
+    gap: 40px;
   }
 
   .footer-content {
@@ -1199,13 +1227,31 @@ button {
   }
 
   .contact-container {
-    padding: 20px;
+    /* padding: 20px; */
+  }
+
+  .contact-info {
+    margin: 0px 0 0px 0px;
+  }
+
+  .contact-form {
+    padding: 0;
+
+    textarea {
+      width: 100%;
+    }
+
+    .input-box-container {
+      flex-direction: column;
+      gap: 10px;
+    }
   }
 
   .contact-form button {
     width: 100%;
     margin-left: 0;
   }
+
 
   .signup-container {
     padding-right: 0;
@@ -1226,6 +1272,17 @@ button {
       height: 35px;
       width: 20px;
       border-radius: 4px;
+    }
+
+    margin-top: 0px;
+  }
+
+  .not-found-container {
+    .not-found-main-container {
+      .not-found-404 {
+        font-size: 3rem;
+      }
+
     }
   }
 }
