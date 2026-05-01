@@ -86,6 +86,8 @@ export default function Navbar({ search, setSearch }) {
                   className={`nav-item user-icon ${isMenuOpen ? "active-icon" : ""}`}
                   style={{
                     borderRadius: "50%",
+                    backgroundColor: "red",
+                    color: "#fff",
                   }}
                 >
                   <User size={24} strokeWidth={1.5} />
