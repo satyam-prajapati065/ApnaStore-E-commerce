@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import brandLogo from "../../ApnaStore-logo.png";
 
 export default function Navbar({ search, setSearch }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -35,8 +36,9 @@ export default function Navbar({ search, setSearch }) {
   return (
     <nav className="navbar-container">
       <div className="navbar-left">
-        <Link to="/" className="only-link">
-          <h2 className="logo">Apna Store</h2>
+        <Link to="/" className="only-link brandLogoBox">
+          <img src={brandLogo} alt="" />
+          <span className="logo">Apna Store</span>
         </Link>
         <div className="menus">
           <NavLink className="nav-item" to="/">
@@ -80,7 +82,22 @@ export default function Navbar({ search, setSearch }) {
                 <span className="cart-count">{cart.length}</span>
               </NavLink>
             </li>
-            {isLoggedIn && (
+            {!isLoggedIn ? (
+              <li className="user-menu-wrapper">
+                <NavLink
+                  className="nav-item"
+                  to="/login"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    fontSize: "1rem",
+                    color: "red",
+                  }}
+                >
+                  Login
+                </NavLink>
+              </li>
+            ) : (
               <li className="user-menu-wrapper" onClick={menu}>
                 <div
                   className={`nav-item user-icon ${isMenuOpen ? "active-icon" : ""}`}

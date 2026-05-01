@@ -33,7 +33,6 @@ export default function Home() {
           heading="Today's"
           title="Flash Sales"
           scrollRef={flashSaleRef}
-          func={true}
         />
         <div className="cart-box1" ref={flashSaleRef}>
           {loading

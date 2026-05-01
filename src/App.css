@@ -1,7 +1,6 @@
 .main-container {
   max-width: 100vw;
-  /* margin: 40px auto; */
-  /* padding: 0 20px; */
+  padding: 20px 20px;
   color: black;
 }
 
@@ -57,10 +56,9 @@ button {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 88px;
+  padding: 0 20px;
   border-bottom: 2px solid #ccc;
   background-color: #fff;
-  /* margin-bottom: 2rem; */
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -72,6 +70,16 @@ button {
   gap: 210px;
   width: 60%;
   color: var(--text2);
+}
+
+.brandLogoBox {
+  display: flex;
+  align-items: center;
+
+  img {
+    height: 55px;
+
+  }
 }
 
 .logo {
@@ -119,7 +127,7 @@ button {
     border: none;
     background: transparent;
     font-size: 14px;
-    width: 180px;
+    width: 100%;
   }
 
   button {
@@ -205,7 +213,6 @@ button {
 .home-page-container {
   width: 100%;
   height: auto;
-  padding: 20px 50px;
 }
 
 .customer-supports-benifits {
@@ -213,7 +220,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 50px;
+  gap: 80px;
   margin-top: 6rem;
   margin-bottom: 4rem;
 
@@ -222,7 +229,6 @@ button {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-left: 30px;
 
     .service-logos {
       width: 70px;
@@ -271,8 +277,6 @@ button {
 
 .display-product-details {
   width: 100%;
-  margin: 40px 0px;
-  padding: 0 50px;
   display: flex;
   flex-direction: column;
 }
@@ -496,21 +500,28 @@ button {
   margin-top: 40px;
 
   .rect {
-    height: 40px;
-    width: 22px;
+    height: 37px;
+    width: 20px;
     border-radius: 4px;
     background-color: var(--secondary2);
   }
 
-  h3 {
+  span {
     color: var(--secondary2);
+    font-weight: bold;
+    font-size: 1.3rem;
   }
 }
 
 .heading-and-btn {
   display: flex;
   justify-content: space-between;
-  padding-right: 35px;
+  padding-right: 0px;
+
+  span {
+    font-weight: bold;
+    font-size: 1.7rem;
+  }
 }
 
 .left-right-toggle {
@@ -570,7 +581,6 @@ button {
 }
 
 .category-container {
-  margin: 50px 50px;
 
   .category-heading {
     margin-top: 3rem;
@@ -774,7 +784,6 @@ button {
 /* ------------------------Sign up page--------------------  */
 
 .signup-container {
-  padding: 20px 50px 40px 0px;
   display: flex;
   justify-content: space-between;
 }
@@ -887,7 +896,6 @@ button {
 /*----------------Contact Page --------------------------*/
 
 .contact-container {
-  padding: 20px 50px 40px 50px;
   display: flex;
   flex-direction: column;
 }
@@ -985,8 +993,6 @@ button {
 
 /*------------Not Found-----------------*/
 .not-found-container {
-  margin: 50px 0 20px 50px;
-
   .not-found-main-container {
     margin-top: 5rem;
     margin-bottom: 5rem;
@@ -1018,62 +1024,222 @@ button {
   }
 }
 
-/*--------------Sale------------*/
 
-.sale-container {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  margin-bottom: 10px;
 
-  .time-boxes {
-    display: flex;
+
+/* ================== TABLET (<= 1024px) ================== */
+@media (max-width: 1024px) {
+
+  .navbar-container {
+    padding: 0 30px;
+  }
+
+  .navbar-left {
+    gap: 40px;
+    width: auto;
+  }
+
+  .menus {
+    gap: 20px;
+  }
+
+  .search-input-box {
+    width: 180px;
+  }
+
+  .main-product-details {
     flex-direction: column;
-    text-align: center;
+    align-items: center;
+  }
 
-    .time {
-      font-weight: bold;
-      font-size: 3rem;
+  .main-image {
+    width: 100%;
+    height: auto;
+  }
+
+  .product-gallery {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .thumbnail-list {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .home-page-container {
+    padding: 20px;
+  }
+
+  .customer-supports-benifits {
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+
+  .signup-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .signup-img-container {
+    width: 100%;
+  }
+
+  .signup-form-container {
+    width: 80%;
+  }
+
+  .contact-main-container {
+    flex-direction: column;
+  }
+
+  .contact-form {
+    width: 100%;
+  }
+
+  .input-box-container input {
+    width: 100%;
+  }
+
+}
+
+
+/* ================== MOBILE (<= 768px) ================== */
+@media (max-width: 768px) {
+
+  .main-container {
+    padding-left: 2px !important;
+  }
+
+  .navbar-container {
+    padding: 0 15px;
+    height: auto;
+    flex-wrap: wrap;
+    gap: 10px;
+    padding-bottom: 0.5rem;
+  }
+
+  .navbar-left {
+    width: 100%;
+    justify-content: space-between;
+    gap: 10px;
+  }
+
+  .menus {
+    /* display: none; */
+  }
+
+  .search-input-box {
+    width: 100%;
+  }
+
+  .navbar-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .searching-container {
+    width: 90%;
+    right: 5%;
+  }
+
+  .cart-box1 {
+    gap: 15px;
+  }
+
+  .category-boxes {
+    min-width: 140px;
+    height: 120px;
+  }
+
+  .main-product-details {
+    padding: 10px;
+  }
+
+  .product-title {
+    font-size: 18px;
+  }
+
+  .price {
+    font-size: 20px;
+  }
+
+  .purchase-actions {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .buy-now-btn {
+    width: 100%;
+    height: 45px;
+  }
+
+  .customer-supports-benifits {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .footer-content {
+    flex-direction: column;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+
+  .footer-content-boxes {
+    align-items: flex-start;
+  }
+
+  .signup-form-container {
+    width: 100%;
+    padding: 0 20px;
+  }
+
+  .input-boxe-container input {
+    width: 100%;
+  }
+
+  .contact-container {
+    padding: 20px;
+  }
+
+  .contact-form button {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .signup-container {
+    padding-right: 0;
+  }
+
+  .signup-btn {
+    width: 100%;
+  }
+
+  .heading-and-btn {
+    span {
+      font-size: 1.3rem;
     }
   }
 
-  .timer-dot {
-    margin-top: 10px;
-    font-size: 3rem;
-    color: var(--secondary2);
-  }
-
-}
-
-.sale-live {
-  width: 20%;
-  font-weight: bold;
-  font-family: 'Jokerman', cursive;
-  font-size: 2.5rem;
-  color: #db4444;
-  overflow: hidden;
-  padding-left: 20px;
-
-  span {
-    display: inline-block;
-    animation: saleAnimate 2s linear infinite;
+  .related-items-box {
+    .rect {
+      height: 35px;
+      width: 20px;
+      border-radius: 4px;
+    }
   }
 }
 
-@keyframes saleAnimate {
-  0% {
-    transform: translateX(-20px);
-    opacity: 0.5;
+
+/* ================== SMALL MOBILE (<= 480px) ================== */
+@media (max-width: 480px) {
+
+  .logo {
+    font-size: 18px;
   }
 
-  50% {
-    transform: translateX(20px);
-    opacity: 1;
-    color: red;
+  .product-title {
+    font-size: 16px;
   }
 
-  100% {
-    transform: translateX(-20px);
-    opacity: 0.5;
-  }
 }
