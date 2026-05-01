@@ -1226,10 +1226,6 @@ button {
     width: 100%;
   }
 
-  .contact-container {
-    /* padding: 20px; */
-  }
-
   .contact-info {
     margin: 0px 0 0px 0px;
   }
@@ -1284,6 +1280,11 @@ button {
       }
 
     }
+  }
+
+  .thumbnail-list img {
+    width: 65px;
+    height: 65px;
   }
 }
 
