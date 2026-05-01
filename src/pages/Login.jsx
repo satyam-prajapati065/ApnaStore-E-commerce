@@ -77,6 +77,16 @@ function Login() {
             <button type="submit">Login</button>
             <Link className="only-link">Forget Password</Link>
           </div>
+          <p style={{ marginTop: "1rem" }}>
+            Create account{" "}
+            <Link
+              to="/login"
+              style={{ color: "var(--secondary2)", fontWeight: "600" }}
+              className="only-link"
+            >
+              Sign Up
+            </Link>
+          </p>
         </div>
       </form>
     </div>
