@@ -80,7 +80,7 @@ function Login() {
           <p style={{ marginTop: "1rem" }}>
             Create account{" "}
             <Link
-              to="/login"
+              to="/signup"
               style={{ color: "var(--secondary2)", fontWeight: "600" }}
               className="only-link"
             >
