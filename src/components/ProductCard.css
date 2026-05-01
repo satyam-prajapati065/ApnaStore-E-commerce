@@ -1,0 +1,145 @@
+:root {
+    /* --primary-red: #DB4444; */
+    --bg-secondary: #F5F5F5;
+    --text-main: #000000;
+    --text-muted: #7D8184;
+    --star-gold: #FFAD33;
+}
+
+.cart-container {
+    width: 255px;
+    height: 370px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    animation: fadeIn 0.5s ease-in;
+}
+
+.cart-container:hover {
+    transform: scale(1.03);
+    transition: 0.3s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+.cart-up {
+    position: relative;
+    width: 255px;
+    height: 245px;
+    background-color: var(--bg-secondary);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cart-img {
+    display: flex;
+    justify-content: center;
+    mix-blend-mode: multiply;
+    width: 75%;
+    height: 75%;
+    object-fit: contain;
+}
+
+.cart-icons {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.icons {
+    background: white;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.3s, color 0.3s;
+    color: var(--text-main);
+    border: none;
+    cursor: pointer;
+}
+
+.icons:hover {
+    background: var(--secondary2);
+    color: white;
+}
+
+.cart-down {
+    padding-top: 16px;
+    padding-left: 10px;
+    padding: 16px 10px 16px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    /* background-color: red; */
+}
+
+.cart-title {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 0;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+}
+
+.price-box {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    margin: 5px 0px;
+}
+
+.rating-cart-box {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.price {
+    color: var(--secondary2);
+    font-weight: 600;
+    font-size: 20px;
+}
+
+.dis-price {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.rating-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+
+.five-star svg {
+    width: 18px;
+    height: 18px;
+}
+
+.total-rating {
+    color: var(--text-muted);
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+}
