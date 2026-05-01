@@ -21,6 +21,7 @@ function Login() {
 
     if (!savedData) {
       alert("No user found! Please Signup.");
+      navigate("/signup");
       return;
     }
 
