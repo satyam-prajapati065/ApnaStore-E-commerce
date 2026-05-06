@@ -1,32 +1,36 @@
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router-dom";
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
-import useFetch from "../components/usefetch";
+import useFetch from "../Custom Hooks/usefetch";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Heart, TruckElectric, RefreshCcw, Star } from "lucide-react";
 import ProductCard from "../components/ProductCard";
 import SkeletonCardDetail from "../components/SkeletonCardDetail";
 import SkeletonCard from "../components/SkeletonCard";
 import Support from "../components/Support";
+import { WishlistContext } from "../context/WishlistContext";
+import { ProductContext } from "../context/ProductContext";
 
 function ProductDetail() {
   const { id } = useParams();
-  const { cart, dispatch } = useContext(CartContext);
+  const { cart, dispatch: cartDispatch } = useContext(CartContext);
+  const { wishlist, dispatch: wishlistDispatch } = useContext(WishlistContext);
+  const navigate = useNavigate();
 
   const { products: currentProduct, loading } = useFetch(
     `https://dummyjson.com/products/${id}`,
   );
-  const { products: relatedProduct } = useFetch(
-    "https://dummyjson.com/products?limit=194",
-  );
+  const { products: relatedProduct } = useContext(ProductContext);
 
+  const cartItem = cart.find((item) => item.id === currentProduct.id);
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
   return (
     <div className="display-product-details">
       <nav className="breadcrumbs">
         <Breadcrumbs />
       </nav>
       <div className="main-product-details">
-        {loading ? (
+        {loading || !currentProduct ? (
           <SkeletonCardDetail />
         ) : (
           <>
@@ -101,34 +105,66 @@ function ProductDetail() {
               </div>
 
               <div className="purchase-actions">
-                <div className="quantity-container">
-                  <button
-                    className="quantity-btn"
-                    onClick={() =>
-                      dispatch({
-                        type: "REMOVE_FROM_CART",
-                        payload: currentProduct,
-                      })
-                    }
-                  >
-                    -
-                  </button>
-                  <div className="quantity-text">
-                    {cart.find((item) => item.id === currentProduct.id)
-                      ?.quantity || 0}
+                {cartItem ? (
+                  <div className="quantity-container">
+                    <button
+                      className="quantity-btn"
+                      onClick={() =>
+                        cartDispatch({
+                          type: "REMOVE_FROM_CART",
+                          payload: currentProduct,
+                        })
+                      }
+                    >
+                      -
+                    </button>
+                    <div className="quantity-text">
+                      {cart.find((item) => item.id === currentProduct.id)
+                        ?.quantity || 0}
+                    </div>
+                    <button
+                      className="quantity-btn"
+                      onClick={() =>
+                        cartDispatch({
+                          type: "ADD_TO_CART",
+                          payload: currentProduct,
+                        })
+                      }
+                    >
+                      +
+                    </button>
                   </div>
+                ) : (
                   <button
-                    className="quantity-btn"
+                    className="buy-now-btn add-to-cart-btn"
                     onClick={() =>
-                      dispatch({ type: "ADD_TO_CART", payload: currentProduct })
+                      isLoggedIn
+                        ? cartDispatch({
+                            type: "ADD_TO_CART",
+                            payload: currentProduct,
+                          })
+                        : navigate("/login")
                     }
                   >
-                    +
+                    Add to Cart
                   </button>
-                </div>
+                )}
+
                 <button className="buy-now-btn">Buy Now</button>
-                <button className="wishlist-btn">
-                  <Heart />
+                <button
+                  className="wishlist-btn"
+                  onClick={() =>
+                    wishlistDispatch({
+                      type: "TOGGLE",
+                      payload: currentProduct,
+                    })
+                  }
+                >
+                  {wishlist.find((item) => item.id === currentProduct.id) ? (
+                    <Heart fill="red" color="red" />
+                  ) : (
+                    <Heart />
+                  )}
                 </button>
               </div>
 

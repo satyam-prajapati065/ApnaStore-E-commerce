@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, Link, useNavigate } from "react-router";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import {
   Heart,
   ShoppingCart,
@@ -13,10 +13,13 @@ import {
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
 import brandLogo from "../../ApnaStore-logo.png";
+import { WishlistContext } from "../context/WishlistContext";
 
 export default function Navbar({ search, setSearch }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { cart } = useContext(CartContext);
+  const { wishlist } = useContext(WishlistContext);
+
   const menu = () => {
     isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true);
   };
@@ -24,7 +27,7 @@ export default function Navbar({ search, setSearch }) {
   const navigate = useNavigate();
 
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-  const user = JSON.parse(localStorage.getItem("currentUser"));
+  const user = JSON.parse(localStorage.getItem("currentUser")) || {};
 
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
@@ -74,12 +77,17 @@ export default function Navbar({ search, setSearch }) {
             <li>
               <NavLink to="/wishlist" className="nav-item user-icon">
                 <Heart size={24} strokeWidth={1.5} />
+                {isLoggedIn && (
+                  <span className="cart-count">{wishlist.length}</span>
+                )}
               </NavLink>
             </li>
             <li>
               <NavLink to="/cart" className="nav-item user-icon">
                 <ShoppingCart size={24} strokeWidth={1.5} />
-                <span className="cart-count">{cart.length}</span>
+                {isLoggedIn && (
+                  <span className="cart-count">{cart.length}</span>
+                )}
               </NavLink>
             </li>
             {!isLoggedIn ? (

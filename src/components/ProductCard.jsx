@@ -1,28 +1,45 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Eye, Heart, Star } from "lucide-react";
 import "./ProductCard.css";
 import { CartContext } from "../context/CartContext";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
+import { WishlistContext } from "../context/WishlistContext";
 
 function ProductCard({ product }) {
+  const { wishlist, dispatch: wishlistDispatch } = useContext(WishlistContext);
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const navigate = useNavigate();
+
   return (
     <div className="cart-container">
       <div className="cart-up">
-        <Link to={`/product/${product.id}`} className="cart-up">
-          <div className="cart-img">
-            <img src={product.thumbnail} />
-          </div>
+        <div className="cart-up">
+          <Link to={`/product/${product.id}`} className="cart-img">
+            <img src={product.thumbnail} alt={product.title} />
+          </Link>
           <div className="cart-icons">
             <div className="icons">
               <Eye />
             </div>
-            <div className="icons">
-              {/* <button className="icons"> */}
-              <Heart />
-              {/* </button> */}
-            </div>
+            <button
+              className="icons"
+              onClick={() => {
+                isLoggedIn
+                  ? wishlistDispatch({
+                      type: "TOGGLE",
+                      payload: product,
+                    })
+                  : navigate("/login");
+              }}
+            >
+              {wishlist.find((item) => item.id === product.id) ? (
+                <Heart fill="red" color="red" />
+              ) : (
+                <Heart />
+              )}
+            </button>
           </div>
-        </Link>
+        </div>
       </div>
       <div className="cart-down">
         <p className="cart-title">{product.title}</p>

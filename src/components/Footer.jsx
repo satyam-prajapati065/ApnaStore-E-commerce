@@ -47,7 +47,7 @@ function Footer() {
         <div className="footer-content-boxes">
           <h3>Download App</h3>
           <div className="footer-content-boxe-text">
-            <p>Save ₹250 with App New User Only</p>
+            <p>Save 5$ with App New User Only</p>
             <div className="scanner-box-inner">
               <img
                 src="https://i.pinimg.com/736x/a8/69/40/a86940a4ed8a69539b341f3c414c47b3.jpg"
@@ -61,12 +61,6 @@ function Footer() {
               />
             </div>
           </div>
-          {/* <div className="social-icons">
-            <p>F</p>
-            <p>I</p>
-            <p>T</p>
-            <p>L</p>
-          </div> */}
         </div>
       </div>
       <div className="footer-copyright">

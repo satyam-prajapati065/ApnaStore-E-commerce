@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 
 function Signup() {
@@ -7,11 +7,13 @@ function Signup() {
     email: "",
     password: "",
   });
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
+
   useEffect(() => {
     const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-    if (isLoggedIn === true) {
+    if (isLoggedIn) {
       navigate("/");
     }
   }, [navigate]);
@@ -23,14 +25,26 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const newUser = {
-      name: formData.name,
-      email: formData.email,
-      password: formData.password,
-    };
-    localStorage.setItem("userData", JSON.stringify(newUser));
+    setError("");
 
-    alert("Account Created Successfully!");
+    if (formData.name.trim().length < 3) {
+      setError("Name must be at least 3 characters long!");
+      return;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setError("Please enter a valid email address!");
+      return;
+    }
+
+    if (formData.password.length < 6) {
+      setError("Password must be at least 6 characters long!");
+      return;
+    }
+
+    localStorage.setItem("userData", JSON.stringify(formData));
+    alert("Account Created Successfully! Please login now.");
     navigate("/login");
   };
 
@@ -39,7 +53,7 @@ function Signup() {
       <div className="signup-img-container">
         <img
           src="https://lifelinemedicalsupply.net/static/media/authimg.3e68db7c28df1d985f02.png"
-          alt=""
+          alt="Auth"
         />
       </div>
       <form className="signup-form-container" onSubmit={handleSubmit}>
@@ -47,6 +61,9 @@ function Signup() {
           <span>Create an account</span>
           <p>Enter your details below</p>
         </div>
+
+        {error && <p style={{ color: "red", fontWeight: "600" }}>{error}</p>}
+
         <div className="signup-form">
           <div className="input-boxe-container">
             <div className="input-box">
@@ -61,17 +78,17 @@ function Signup() {
             </div>
             <div className="input-box">
               <input
-                type="text"
+                type="email"
                 name="email"
                 value={formData.email}
-                placeholder="Email or Phone Number"
+                placeholder="Email Address"
                 onChange={handleChange}
                 required
               />
             </div>
             <div className="input-box">
               <input
-                type="Password"
+                type="password"
                 name="password"
                 value={formData.password}
                 placeholder="Password"
@@ -83,17 +100,8 @@ function Signup() {
           <div className="signup-btn">
             <button type="submit">Create Account</button>
             <div className="other-signup">
-              <div className="google-signup">
-                <img
-                  src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-                  alt="Google"
-                  width="20"
-                  height="20"
-                />
-                <span>Sign up with Google</span>
-              </div>
               <p>
-                Already have account?{" "}
+                Already have an account?{" "}
                 <Link
                   to="/login"
                   style={{ color: "var(--secondary2)", fontWeight: "600" }}

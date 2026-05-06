@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import { useNavigate } from "react-router";
-import useFetch from "./usefetch";
+import { useNavigate } from "react-router-dom";
+import useFetch from "../Custom Hooks/usefetch";
 import ScrollLeftRight from "./ScrollLeftRight";
 
 function CategoryFilter({ category }) {

@@ -1,18 +1,16 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import ProductCard from "../components/ProductCard";
-import useFetch from "../components/usefetch";
 import CategoryFilter from "../components/CategoryFilter";
 import SkeletonCard from "../components/SkeletonCard";
 import ScrollLeftRight from "../components/ScrollLeftRight";
 import Support from "../components/Support";
+import { ProductContext } from "../context/ProductContext";
 
 export default function Home() {
   const flashSaleRef = useRef(null);
   const bestSellingRef = useRef(null);
 
-  const { products, loading } = useFetch(
-    "https://dummyjson.com/products?limit=194",
-  );
+  const { products, loading } = useContext(ProductContext);
   const bestSelling = products
     .map((prev) => ({
       ...prev,

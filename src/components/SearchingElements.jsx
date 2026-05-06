@@ -1,39 +1,43 @@
-import React from "react";
-import useFetch from "./usefetch";
-import { Link } from "react-router";
+import React, { useContext } from "react";
+import { Link } from "react-router-dom";
+import useDebounce from "../Custom Hooks/useDebounce";
+import { ProductContext } from "../context/ProductContext";
 
 function SearchingElements({ search, setSearch }) {
-  const { products } = useFetch("https://dummyjson.com/products?limit=194");
+  const { products, loading } = useContext(ProductContext);
+  const debouncedSearch = useDebounce(search, 400);
+
   const filteredProducts = React.useMemo(() => {
-    if (!search.trim()) {
-      return [];
-    }
+    if (!debouncedSearch.trim()) return [];
+
     return products.filter((item) =>
-      item.title.toLowerCase().includes(search.toLowerCase()),
+      item.title.toLowerCase().includes(debouncedSearch.toLowerCase()),
     );
-  }, [products, search]);
+  }, [products, debouncedSearch]);
+
+  if (!search.trim()) return null;
 
   return (
-    <>
-      {filteredProducts.length > 0 && (
-        <div className="searching-container">
-          {filteredProducts.map((item) => (
-            <Link
-              to={`/product/${item.id}`}
-              className="serching-items only-link"
-              key={item.title}
-              onClick={() => setSearch("")}
-            >
-              <img src={item.thumbnail} alt="" />
-              <div className="titles-category">
-                <span>{item.title}</span>
-                <p style={{ color: "blue" }}>{item.category}</p>
-              </div>
-            </Link>
-          ))}
-        </div>
+    <div className="searching-container">
+      {loading && <p style={{ padding: "1rem" }}>Searching...</p>}
+      {!loading && filteredProducts.length === 0 && (
+        <p style={{ padding: "1rem" }}>No products found.</p>
       )}
-    </>
+      {filteredProducts.map((item) => (
+        <Link
+          to={`/product/${item.id}`}
+          className="serching-items only-link"
+          key={item.id}
+          onClick={() => setSearch("")}
+        >
+          <img src={item.thumbnail} alt={item.title} />
+          <div className="titles-category">
+            <span>{item.title}</span>
+            <p style={{ color: "blue" }}>{item.category}</p>
+          </div>
+        </Link>
+      ))}
+    </div>
   );
 }
 

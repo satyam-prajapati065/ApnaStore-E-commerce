@@ -18,9 +18,9 @@ button {
   width: 40%;
   background-color: #fff;
   box-shadow: 0px 0px 5px #636262;
-  position: absolute;
+  position: fixed;
   right: 15%;
-  padding: 0px 20px 20px 20px;
+  padding: 5px 20px 20px 20px;
   border-radius: 10px;
   z-index: 1100;
   max-height: 400px;
@@ -416,11 +416,13 @@ button {
   gap: 15px;
   margin-top: 10px;
   margin-bottom: 30px;
+  min-height: 36px;
 
   .quantity-container {
     display: flex;
     align-items: center;
     gap: 8px;
+    width: 147px;
   }
 
   .quantity-text {
@@ -448,6 +450,7 @@ button {
     padding: 0 40px;
     border-radius: 4px;
     font-weight: 500;
+    height: 35px;
   }
 
   .wishlist-btn {
@@ -599,6 +602,48 @@ button {
     color: #fff;
   }
 }
+
+/*-------------Breadcrumbs-----------*/
+
+.breadcrumb {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 10px 0;
+  margin: 0;
+  font-size: 14px;
+  font-family: Arial, sans-serif;
+}
+
+.breadcrumb li {
+  display: flex;
+  align-items: center;
+  color: #555;
+}
+
+.breadcrumb li+li::before {
+  content: "›";
+  padding: 0 8px;
+  color: #999;
+  font-size: 16px;
+}
+
+.breadcrumb a {
+  text-decoration: none;
+  color: var(--secondary2);
+  transition: color 0.2s ease;
+}
+
+.breadcrumb a:hover {
+  color: var(--secondary2);
+  text-decoration: underline;
+}
+
+.breadcrumb span {
+  color: #333;
+  font-weight: 500;
+}
+
 
 
 /* Loading Effect  */

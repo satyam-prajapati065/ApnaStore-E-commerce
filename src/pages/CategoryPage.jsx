@@ -1,7 +1,7 @@
-import { useParams } from "react-router";
+import { useParams } from "react-router-dom";
 import ProductCard from "../components/ProductCard";
-import { useNavigate } from "react-router";
-import useFetch from "../components/usefetch";
+import { useNavigate } from "react-router-dom";
+import useFetch from "../Custom Hooks/usefetch";
 import CategoryFilter from "../components/CategoryFilter";
 import SkeletonCard from "../components/SkeletonCard";
 import Support from "../components/Support";
