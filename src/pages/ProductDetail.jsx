@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useFetch from "../Custom Hooks/usefetch";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Heart, TruckElectric, RefreshCcw, Star } from "lucide-react";
@@ -7,7 +7,6 @@ import ProductCard from "../components/ProductCard";
 import SkeletonCardDetail from "../components/SkeletonCardDetail";
 import SkeletonCard from "../components/SkeletonCard";
 import Support from "../components/Support";
-import { ProductContext } from "../context/ProductContext";
 import { useDispatch, useSelector } from "react-redux";
 import {
   ADD_TO_CART,
@@ -15,8 +14,10 @@ import {
   DECREMENT_QUANTITY,
 } from "../Redux/cartSlice";
 import { TOGGLE } from "../Redux/wishlistSlice";
+import ScrollLeftRight from "../components/ScrollLeftRight";
 
 function ProductDetail() {
+  const relatedItems = useRef(null);
   const { id } = useParams();
   const wishlists = useSelector((state) => state.wishlist.wishlistItems);
   const wishlistDispatch = useDispatch();
@@ -28,7 +29,12 @@ function ProductDetail() {
   const { products: currentProduct, loading } = useFetch(
     `https://dummyjson.com/products/${id}`,
   );
-  const { products: relatedProduct } = useContext(ProductContext);
+  const [page, setPage] = useState(1);
+  const { products: relatedProducts, loading: relatedLoading } = useFetch(
+    `https://dummyjson.com/products?limit=10&skip=${(page - 1) * 10}`,
+  );
+
+  const totalPages = 20;
 
   const [activeImage, setActiveImage] = useState(null);
   useEffect(() => {
@@ -278,24 +284,17 @@ function ProductDetail() {
         )}
       </div>
       <div className="related-items-container">
-        <div className="related-items-box">
-          <div className="rect"></div>
-          <h3>Related Items</h3>
-        </div>
-        <div
-          className="cart-box1"
-          style={{
-            display: "flex",
-            gap: "30px",
-            width: "100%",
-            overflow: "scroll hidden",
-            height: "420px",
-            padding: "1rem",
-          }}
-        >
-          {loading
+        <ScrollLeftRight
+          heading="Related Items"
+          scrollRef={relatedItems}
+          page={page}
+          setPage={setPage}
+          totalPages={totalPages}
+        />
+        <div className="cart-box1" ref={relatedItems}>
+          {relatedLoading
             ? [...Array(5)].map((_, i) => <SkeletonCard key={i} />)
-            : relatedProduct?.map((item) => (
+            : relatedProducts?.map((item) => (
                 <ProductCard key={item.id} product={item} />
               ))}
         </div>
