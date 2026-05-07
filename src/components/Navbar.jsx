@@ -120,7 +120,7 @@ export default function Navbar({ search, setSearch }) {
                       <User size={18} strokeWidth={2.5} />
                       {user.firstName.toUpperCase()}
                     </p>
-                    <Link to="/profileedit" className="dropdown-item">
+                    <Link to="/manageAccount" className="dropdown-item">
                       <Settings size={18} /> Manage My Account
                     </Link>
                     <Link to="/orders" className="dropdown-item">

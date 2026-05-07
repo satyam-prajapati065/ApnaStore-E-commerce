@@ -19,7 +19,6 @@ h1 {
     gap: 80px;
 }
 
-/* Form Styles */
 .billing-form {
     display: flex;
     flex-direction: column;
@@ -60,7 +59,6 @@ h1 {
     accent-color: #db4444;
 }
 
-/* Summary Styles */
 .order-summary {
     display: flex;
     flex-direction: column;
@@ -140,7 +138,6 @@ hr {
     flex: 1;
 }
 
-/* Buttons */
 .apply-btn,
 .place-order-btn {
     background-color: #db4444;
@@ -156,7 +153,6 @@ hr {
     padding: 16px 48px;
 }
 
-/* Mobile Responsive */
 @media (max-width: 768px) {
     .checkout-content {
         grid-template-columns: 1fr;

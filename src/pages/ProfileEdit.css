@@ -20,7 +20,6 @@
     gap: 60px;
 }
 
-/* Sidebar Styling */
 .sidebar {
     width: 250px;
 }
@@ -50,7 +49,6 @@
     color: #db4444;
 }
 
-/* Form Card Styling */
 .edit-profile-card {
     flex: 1;
     background: #fff;
@@ -107,7 +105,6 @@
     margin-bottom: -5px;
 }
 
-/* Actions */
 .form-actions {
     display: flex;
     justify-content: flex-end;
@@ -133,7 +130,6 @@
     font-size: 16px;
 }
 
-/* Responsive */
 @media (max-width: 768px) {
     .profile-content {
         flex-direction: column;
