@@ -1,14 +1,14 @@
 import React, { useContext } from "react";
-import { WishlistContext } from "../context/WishlistContext";
-// import useFetch from "../components/usefetch";
 import SkeletonCard from "../components/SkeletonCard";
 import WishlistCard from "../components/WishlistCard";
 import Breadcrumbs from "../components/Breadcrumbs";
 import ProductCard from "../components/ProductCard";
 import { ProductContext } from "../context/ProductContext";
+import { useSelector } from "react-redux";
 
 function Wishlist() {
-  const { wishlist } = useContext(WishlistContext);
+  const wishlists = useSelector((state) => state.wishlist.wishlistItems);
+
   const { products: relatedProduct, loading } = useContext(ProductContext);
   return (
     <div className="wishlist-main-container">
@@ -19,7 +19,7 @@ function Wishlist() {
       <div className="wishlist-container">
         <div className="related-items-container">
           <div className="related-items-box">
-            <h3>My Wishlist ({wishlist.length})</h3>
+            <h3>My Wishlist ({wishlists.length})</h3>
           </div>
           <div
             className="cart-box1"
@@ -32,12 +32,12 @@ function Wishlist() {
               padding: "1rem",
             }}
           >
-            {wishlist.length === 0 ? (
+            {wishlists.length === 0 ? (
               <p style={{ color: "grey", padding: "1rem" }}>
                 Your wishlist is empty!
               </p>
             ) : (
-              wishlist.map((item) => (
+              wishlists.map((item) => (
                 <WishlistCard key={item.id} product={item} />
               ))
             )}

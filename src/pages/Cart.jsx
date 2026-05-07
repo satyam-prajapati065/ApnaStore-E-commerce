@@ -1,13 +1,19 @@
-import React, { useContext } from "react";
-import { CartContext } from "../context/CartContext";
 import "./Cart.css";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { useNavigate } from "react-router-dom";
 import Support from "../components/Support";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ADD_TO_CART,
+  INCREMENT_QUANTITY,
+  DECREMENT_QUANTITY,
+} from "../Redux/cartSlice";
 
 function Cart() {
-  const { cart, dispatch } = useContext(CartContext);
-  const total = cart
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartDispatch = useDispatch();
+
+  const total = cartItems
     .reduce((acc, item) => acc + item.price * item.quantity, 0)
     .toFixed(2);
 
@@ -31,7 +37,7 @@ function Cart() {
               </tr>
             </thead>
             <tbody>
-              {cart.length === 0 ? (
+              {cartItems.length === 0 ? (
                 <tr>
                   <td
                     colSpan="4"
@@ -41,7 +47,7 @@ function Cart() {
                   </td>
                 </tr>
               ) : (
-                cart.map((item) => (
+                cartItems.map((item) => (
                   <tr key={item.id}>
                     <td className="product-info">
                       <img
@@ -57,10 +63,7 @@ function Cart() {
                         <button
                           className="quantity-btn"
                           onClick={() =>
-                            dispatch({
-                              type: "REMOVE_FROM_CART",
-                              payload: item,
-                            })
+                            cartDispatch(DECREMENT_QUANTITY(item.id))
                           }
                         >
                           -
@@ -69,7 +72,7 @@ function Cart() {
                         <button
                           className="quantity-btn"
                           onClick={() =>
-                            dispatch({ type: "ADD_TO_CART", payload: item })
+                            cartDispatch(INCREMENT_QUANTITY(item.id))
                           }
                         >
                           +

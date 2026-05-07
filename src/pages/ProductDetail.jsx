@@ -1,6 +1,5 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
+import { useContext, useState, useEffect } from "react";
 import useFetch from "../Custom Hooks/usefetch";
 import Breadcrumbs from "../components/Breadcrumbs";
 import { Heart, TruckElectric, RefreshCcw, Star } from "lucide-react";
@@ -8,13 +7,22 @@ import ProductCard from "../components/ProductCard";
 import SkeletonCardDetail from "../components/SkeletonCardDetail";
 import SkeletonCard from "../components/SkeletonCard";
 import Support from "../components/Support";
-import { WishlistContext } from "../context/WishlistContext";
 import { ProductContext } from "../context/ProductContext";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  ADD_TO_CART,
+  INCREMENT_QUANTITY,
+  DECREMENT_QUANTITY,
+} from "../Redux/cartSlice";
+import { TOGGLE } from "../Redux/wishlistSlice";
 
 function ProductDetail() {
   const { id } = useParams();
-  const { cart, dispatch: cartDispatch } = useContext(CartContext);
-  const { wishlist, dispatch: wishlistDispatch } = useContext(WishlistContext);
+  const wishlists = useSelector((state) => state.wishlist.wishlistItems);
+  const wishlistDispatch = useDispatch();
+
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const cartDispatch = useDispatch();
   const navigate = useNavigate();
 
   const { products: currentProduct, loading } = useFetch(
@@ -22,8 +30,19 @@ function ProductDetail() {
   );
   const { products: relatedProduct } = useContext(ProductContext);
 
-  const cartItem = cart.find((item) => item.id === currentProduct.id);
+  const [activeImage, setActiveImage] = useState(null);
+  useEffect(() => {
+    if (currentProduct) {
+      setActiveImage(currentProduct.thumbnail);
+    }
+  }, [currentProduct]);
+
+  const cartItem = currentProduct
+    ? cartItems.find((item) => item.id === currentProduct.id)
+    : null;
+
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+
   return (
     <div className="display-product-details">
       <nav className="breadcrumbs">
@@ -36,13 +55,39 @@ function ProductDetail() {
           <>
             <div className="product-gallery">
               <div className="thumbnail-list">
-                <img src={currentProduct.thumbnail} alt="view 1" />
-                <img src={currentProduct.thumbnail} alt="view 2" />
-                <img src={currentProduct.thumbnail} alt="view 3" />
-                <img src={currentProduct.thumbnail} alt="view 4" />
+                {currentProduct.images && currentProduct.images.length > 0 ? (
+                  currentProduct.images.slice(0, 4).map((img, index) => (
+                    <img
+                      key={index}
+                      src={img}
+                      alt={`view ${index + 1}`}
+                      onClick={() => setActiveImage(img)}
+                      style={{
+                        cursor: "pointer",
+                        border:
+                          activeImage === img
+                            ? "2px solid #FFAD33"
+                            : "1px solid #D1D1D1",
+                        borderRadius: "4px",
+                      }}
+                    />
+                  ))
+                ) : (
+                  <>
+                    <img
+                      src={currentProduct.thumbnail}
+                      alt="view 1"
+                      onClick={() => setActiveImage(currentProduct.thumbnail)}
+                      style={{ cursor: "pointer" }}
+                    />
+                  </>
+                )}
               </div>
               <div className="main-image">
-                <img src={currentProduct.thumbnail} />
+                <img
+                  src={activeImage || currentProduct.thumbnail}
+                  alt={currentProduct.title}
+                />
               </div>
             </div>
 
@@ -54,12 +99,12 @@ function ProductDetail() {
                     <Star
                       key={index}
                       fill={
-                        index <= Math.round(currentProduct.rating)
+                        index <= Math.round(currentProduct.rating || 0)
                           ? "#FFAD33"
                           : "transparent"
                       }
                       color={
-                        index <= Math.round(currentProduct.rating)
+                        index <= Math.round(currentProduct.rating || 0)
                           ? "#FFAD33"
                           : "#D1D1D1"
                       }
@@ -67,7 +112,7 @@ function ProductDetail() {
                   ))}
                 </div>
                 <span className="reviews">
-                  {currentProduct.reviews.length} Reviews
+                  {currentProduct.reviews?.length || 0} Reviews
                 </span>
                 <span className="divider">|</span>
                 <span className="stock-status">
@@ -110,25 +155,16 @@ function ProductDetail() {
                     <button
                       className="quantity-btn"
                       onClick={() =>
-                        cartDispatch({
-                          type: "REMOVE_FROM_CART",
-                          payload: currentProduct,
-                        })
+                        cartDispatch(DECREMENT_QUANTITY(currentProduct.id))
                       }
                     >
                       -
                     </button>
-                    <div className="quantity-text">
-                      {cart.find((item) => item.id === currentProduct.id)
-                        ?.quantity || 0}
-                    </div>
+                    <div className="quantity-text">{cartItem.quantity}</div>
                     <button
                       className="quantity-btn"
                       onClick={() =>
-                        cartDispatch({
-                          type: "ADD_TO_CART",
-                          payload: currentProduct,
-                        })
+                        cartDispatch(INCREMENT_QUANTITY(currentProduct.id))
                       }
                     >
                       +
@@ -139,10 +175,7 @@ function ProductDetail() {
                     className="buy-now-btn add-to-cart-btn"
                     onClick={() =>
                       isLoggedIn
-                        ? cartDispatch({
-                            type: "ADD_TO_CART",
-                            payload: currentProduct,
-                          })
+                        ? cartDispatch(ADD_TO_CART(currentProduct))
                         : navigate("/login")
                     }
                   >
@@ -153,14 +186,9 @@ function ProductDetail() {
                 <button className="buy-now-btn">Buy Now</button>
                 <button
                   className="wishlist-btn"
-                  onClick={() =>
-                    wishlistDispatch({
-                      type: "TOGGLE",
-                      payload: currentProduct,
-                    })
-                  }
+                  onClick={() => wishlistDispatch(TOGGLE(currentProduct))}
                 >
-                  {wishlist.find((item) => item.id === currentProduct.id) ? (
+                  {wishlists.find((item) => item.id === currentProduct.id) ? (
                     <Heart fill="red" color="red" />
                   ) : (
                     <Heart />
@@ -211,7 +239,7 @@ function ProductDetail() {
         >
           {loading
             ? [...Array(5)].map((_, i) => <SkeletonCard key={i} />)
-            : relatedProduct.map((item) => (
+            : relatedProduct?.map((item) => (
                 <ProductCard key={item.id} product={item} />
               ))}
         </div>

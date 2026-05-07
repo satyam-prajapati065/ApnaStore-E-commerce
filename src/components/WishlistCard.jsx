@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
 import { Eye, Trash2 } from "lucide-react";
 import "./ProductCard.css";
 import { Link } from "react-router-dom";
-import { WishlistContext } from "../context/WishlistContext";
+import { useDispatch } from "react-redux";
+import { TOGGLE } from "../Redux/wishlistSlice";
 
 function WishlistCard({ product }) {
-  const { dispatch: wishlistDispatch } = useContext(WishlistContext);
+  const wishlistDispatch = useDispatch();
 
   return (
     <div className="cart-container">
@@ -20,12 +20,7 @@ function WishlistCard({ product }) {
           <button
             className="icons"
             style={{ border: "none", cursor: "pointer", background: "none" }}
-            onClick={() =>
-              wishlistDispatch({
-                type: "TOGGLE",
-                payload: product,
-              })
-            }
+            onClick={() => wishlistDispatch(TOGGLE(product))}
           >
             <Trash2 size={18} color="red" />
           </button>

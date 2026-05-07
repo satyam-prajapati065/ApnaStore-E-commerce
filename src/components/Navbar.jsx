@@ -10,15 +10,13 @@ import {
   Star,
   LogOut,
 } from "lucide-react";
-import { useContext } from "react";
-import { CartContext } from "../context/CartContext";
 import brandLogo from "../../ApnaStore-logo.png";
-import { WishlistContext } from "../context/WishlistContext";
+import { useSelector } from "react-redux";
 
 export default function Navbar({ search, setSearch }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { cart } = useContext(CartContext);
-  const { wishlist } = useContext(WishlistContext);
+  const cartItems = useSelector((state) => state.cart.cartItems);
+  const wishlists = useSelector((state) => state.wishlist.wishlistItems);
 
   const menu = () => {
     isMenuOpen ? setIsMenuOpen(false) : setIsMenuOpen(true);
@@ -34,7 +32,6 @@ export default function Navbar({ search, setSearch }) {
     localStorage.removeItem("currentUser");
 
     navigate("/login");
-    window.location.reload();
   };
   return (
     <nav className="navbar-container">
@@ -78,7 +75,7 @@ export default function Navbar({ search, setSearch }) {
               <NavLink to="/wishlist" className="nav-item user-icon">
                 <Heart size={24} strokeWidth={1.5} />
                 {isLoggedIn && (
-                  <span className="cart-count">{wishlist.length}</span>
+                  <span className="cart-count">{wishlists.length}</span>
                 )}
               </NavLink>
             </li>
@@ -86,7 +83,7 @@ export default function Navbar({ search, setSearch }) {
               <NavLink to="/cart" className="nav-item user-icon">
                 <ShoppingCart size={24} strokeWidth={1.5} />
                 {isLoggedIn && (
-                  <span className="cart-count">{cart.length}</span>
+                  <span className="cart-count">{cartItems.length}</span>
                 )}
               </NavLink>
             </li>

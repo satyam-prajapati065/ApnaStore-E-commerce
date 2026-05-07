@@ -37,7 +37,6 @@ function Login() {
       localStorage.setItem("currentUser", JSON.stringify(user));
 
       navigate("/");
-      window.location.reload();
     } else {
       setError("Incorrect email or password combination!");
     }

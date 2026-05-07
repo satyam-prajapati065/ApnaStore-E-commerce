@@ -1,53 +1,57 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Eye, Heart, Star } from "lucide-react";
 import "./ProductCard.css";
-import { CartContext } from "../context/CartContext";
 import { Link, useNavigate } from "react-router-dom";
-import { WishlistContext } from "../context/WishlistContext";
+import { useDispatch, useSelector } from "react-redux";
+import { TOGGLE } from "../Redux/wishlistSlice";
 
 function ProductCard({ product }) {
-  const { wishlist, dispatch: wishlistDispatch } = useContext(WishlistContext);
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const wishlists = useSelector((state) => state.wishlist.wishlistItems);
+  const wishlistDispatch = useDispatch();
   const navigate = useNavigate();
+
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const isWishlisted = wishlists.some((item) => item.id === product?.id);
+
+  const productRating = product?.rating || 0;
+  const totalReviews = product?.reviews?.length || 0;
 
   return (
     <div className="cart-container">
       <div className="cart-up">
-        <div className="cart-up">
-          <Link to={`/product/${product.id}`} className="cart-img">
-            <img src={product.thumbnail} alt={product.title} />
-          </Link>
-          <div className="cart-icons">
-            <div className="icons">
-              <Eye />
-            </div>
-            <button
-              className="icons"
-              onClick={() => {
-                isLoggedIn
-                  ? wishlistDispatch({
-                      type: "TOGGLE",
-                      payload: product,
-                    })
-                  : navigate("/login");
-              }}
-            >
-              {wishlist.find((item) => item.id === product.id) ? (
-                <Heart fill="red" color="red" />
-              ) : (
-                <Heart />
-              )}
-            </button>
+        <Link to={`/product/${product?.id}`} className="cart-img">
+          <img src={product?.thumbnail} alt={product?.title} />
+        </Link>
+        <div className="cart-icons">
+          <div
+            className="icons"
+            onClick={() => navigate(`/product/${product?.id}`)}
+            style={{ cursor: "pointer" }}
+          >
+            <Eye />
           </div>
+          <button
+            className="icons"
+            onClick={() => {
+              isLoggedIn
+                ? wishlistDispatch(TOGGLE(product))
+                : navigate("/login");
+            }}
+          >
+            {isWishlisted ? <Heart fill="red" color="red" /> : <Heart />}
+          </button>
         </div>
       </div>
+
       <div className="cart-down">
-        <p className="cart-title">{product.title}</p>
+        <p className="cart-title">{product?.title}</p>
         <div className="price-box">
-          <p className="price">${product.price}</p>
-          <p className="dis-price" style={{ color: "green" }}>
-            {product.discountPercentage}% off
-          </p>
+          <p className="price">${product?.price}</p>
+          {product?.discountPercentage && (
+            <p className="dis-price" style={{ color: "green" }}>
+              {product.discountPercentage}% off
+            </p>
+          )}
         </div>
         <div className="rating-cart-box">
           <div className="rating-box">
@@ -56,17 +60,17 @@ function ProductCard({ product }) {
                 <Star
                   key={index}
                   fill={
-                    index <= Math.round(product.rating)
+                    index <= Math.round(productRating)
                       ? "#FFAD33"
                       : "transparent"
                   }
                   color={
-                    index <= Math.round(product.rating) ? "#FFAD33" : "#D1D1D1"
+                    index <= Math.round(productRating) ? "#FFAD33" : "#D1D1D1"
                   }
                 />
               ))}
             </div>
-            <p className="total-rating">{product.reviews.length} Reviews</p>
+            <p className="total-rating">{totalReviews} Reviews</p>
           </div>
         </div>
       </div>
