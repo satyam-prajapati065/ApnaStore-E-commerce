@@ -23,7 +23,7 @@ function CategoryPage() {
 
       <div className="categorized-products">
         {loading
-          ? [...Array(5)].map((_, i) => <SkeletonCard key={i} />)
+          ? [...Array(6)].map((_, i) => <SkeletonCard key={i} />)
           : products.map((item) => (
               <ProductCard key={item.id} product={item} />
             ))}

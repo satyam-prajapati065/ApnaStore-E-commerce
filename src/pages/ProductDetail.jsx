@@ -33,7 +33,12 @@ function ProductDetail() {
   const [activeImage, setActiveImage] = useState(null);
   useEffect(() => {
     if (currentProduct) {
-      setActiveImage(currentProduct.thumbnail);
+      const initialImage =
+        currentProduct.images?.length > 0
+          ? currentProduct.images[0]
+          : currentProduct.thumbnail;
+
+      setActiveImage(initialImage);
     }
   }, [currentProduct]);
 
@@ -42,7 +47,24 @@ function ProductDetail() {
     : null;
 
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
-
+  const fashionCategories = [
+    "womens-dresses",
+    "tops",
+    "mens-shirts",
+    "womens-shoes",
+    "mens-shoes",
+    "shirts",
+  ];
+  const colorApplicableCategories = [
+    "womens-dresses",
+    "tops",
+    "mens-shirts",
+    "mens-shoes",
+    "womens-shoes",
+    "smartphones",
+    "laptops",
+    "tablets",
+  ];
   return (
     <div className="display-product-details">
       <nav className="breadcrumbs">
@@ -130,22 +152,56 @@ function ProductDetail() {
 
               <div className="options">
                 <div className="option-row">
-                  <span>Colours:</span>
-                  <div className="color-picker">
-                    <span className="color-circle blue active"></span>
-                    <span className="color-circle red"></span>
-                  </div>
+                  {colorApplicableCategories.includes(
+                    currentProduct.category,
+                  ) ? (
+                    <>
+                      <span>Colours:</span>
+                      <div className="color-picker">
+                        {["#000000", "#FF0000", "#0000FF", "#FFFFFF"].map(
+                          (color, index) => (
+                            <span
+                              key={index}
+                              className={`color-circle ${index === 0 ? "active" : ""}`}
+                              style={{
+                                backgroundColor: color,
+                                border:
+                                  color === "#FFFFFF"
+                                    ? "1px solid #ccc"
+                                    : "none",
+                              }}
+                            ></span>
+                          ),
+                        )}
+                      </div>
+                    </>
+                  ) : (
+                    <span className="no-size-msg">
+                      Color options not available
+                    </span>
+                  )}
                 </div>
 
                 <div className="option-row">
-                  <span>Size:</span>
-                  <div className="size-picker">
-                    <button>XS</button>
-                    <button>S</button>
-                    <button className="active">M</button>
-                    <button>L</button>
-                    <button>XL</button>
-                  </div>
+                  {fashionCategories.includes(currentProduct.category) ? (
+                    <>
+                      <span>Size:</span>
+                      <div className="size-picker">
+                        {["S", "M", "L", "XL"].map((size) => (
+                          <button
+                            key={size}
+                            className={size === "M" ? "active" : ""}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
+                    </>
+                  ) : (
+                    <span className="no-size-msg">
+                      Size not applicable for this item
+                    </span>
+                  )}
                 </div>
               </div>
 
