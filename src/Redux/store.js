@@ -2,12 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
 import wishlistReducer from "./wishlistSlice";
 
-// current user
-const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
 // load state
 const loadState = () => {
   try {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
     return {
       cart: {
         cartItems: currentUser?.cart || [],
@@ -39,26 +38,25 @@ store.subscribe(() => {
   try {
     const state = store.getState();
 
-    let users = JSON.parse(localStorage.getItem("userData")) || [];
+    const users = JSON.parse(localStorage.getItem("userData")) || [];
 
-    let current = JSON.parse(localStorage.getItem("currentUser"));
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-    if (!current) return;
+    if (!currentUser) return;
 
     const updatedUser = {
-      ...current,
+      ...currentUser,
       cart: state.cart.cartItems,
       wishlist: state.wishlist.wishlistItems,
     };
 
     localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-    const userIndex = users.findIndex((u) => u.id === current.id);
 
-    if (userIndex !== -1) {
-      users[userIndex] = updatedUser;
+    const updatedUsers = users.map((user) =>
+      user.id === currentUser.id ? updatedUser : user,
+    );
 
-      localStorage.setItem("userData", JSON.stringify(users));
-    }
+    localStorage.setItem("userData", JSON.stringify(updatedUsers));
   } catch (error) {
     console.log(error);
   }

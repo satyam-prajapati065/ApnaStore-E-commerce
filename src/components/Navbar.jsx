@@ -11,9 +11,12 @@ import {
   LogOut,
 } from "lucide-react";
 import brandLogo from "../../ApnaStore-logo.png";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { RESET_CART } from "../Redux/cartSlice";
+import { RESET_WISHLIST } from "../Redux/wishlistSlice";
 
 export default function Navbar({ search, setSearch }) {
+  const dispatch = useDispatch();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const cartItems = useSelector((state) => state.cart.cartItems);
   const wishlists = useSelector((state) => state.wishlist.wishlistItems);
@@ -30,7 +33,8 @@ export default function Navbar({ search, setSearch }) {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("currentUser");
-
+    dispatch(RESET_CART());
+    dispatch(RESET_WISHLIST());
     navigate("/login");
   };
   return (
