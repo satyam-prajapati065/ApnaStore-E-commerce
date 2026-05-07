@@ -37,10 +37,10 @@ const ProfileEdit = () => {
     }
     localStorage.setItem("currentUser", JSON.stringify(updatedUser));
     alert("Profile Updated!");
+    window.location.reload();
   };
   return (
     <div className="profile-container">
-      {/* Header Breadcrumb & Welcome */}
       <div className="profile-header">
         <nav className="breadcrumb">
           <Breadcrumbs />
@@ -54,7 +54,6 @@ const ProfileEdit = () => {
       </div>
 
       <div className="profile-content">
-        {/* Sidebar */}
         <aside className="sidebar">
           <div className="sidebar-section">
             <h3>Manage My Account</h3>
@@ -76,7 +75,6 @@ const ProfileEdit = () => {
           </div>
         </aside>
 
-        {/* Main Form Card */}
         <main className="edit-profile-card">
           <h2 className="form-title">Edit Your Profile</h2>
 

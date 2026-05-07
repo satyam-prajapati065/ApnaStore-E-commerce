@@ -17,7 +17,6 @@ const Checkout = () => {
       <h1>Billing Details</h1>
 
       <div className="checkout-content">
-        {/* Left Side: Billing Form */}
         <form className="billing-form">
           <div className="input-group">
             <label>
@@ -72,7 +71,6 @@ const Checkout = () => {
           </div>
         </form>
 
-        {/* Right Side: Order Summary */}
         <div className="order-summary">
           <div className="cart-items">
             {cartItems.map((item) => (
@@ -113,7 +111,6 @@ const Checkout = () => {
               <input type="radio" name="payment" id="bank" />
               <label htmlFor="bank">Bank</label>
               <div className="payment-icons">
-                {/* Yahan aap icons images laga sakte hain */}
                 <span className="icon-placeholder">💳</span>
               </div>
             </div>
