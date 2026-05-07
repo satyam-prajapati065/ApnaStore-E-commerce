@@ -3,7 +3,8 @@ import React, { useEffect, useState } from "react";
 
 function Signup() {
   const [formData, setFormData] = useState({
-    name: "",
+    firstName: "",
+    lastName: "",
     email: "",
     password: "",
   });
@@ -25,14 +26,16 @@ function Signup() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     setError("");
 
-    if (formData.name.trim().length < 3) {
+    if (formData.firstName.trim().length < 3) {
       setError("Name must be at least 3 characters long!");
       return;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
     if (!emailRegex.test(formData.email)) {
       setError("Please enter a valid email address!");
       return;
@@ -42,9 +45,26 @@ function Signup() {
       setError("Password must be at least 6 characters long!");
       return;
     }
+    const users = JSON.parse(localStorage.getItem("userData")) || [];
+    const userExists = users.find((user) => user.email === formData.email);
 
-    localStorage.setItem("userData", JSON.stringify(formData));
-    alert("Account Created Successfully! Please login now.");
+    if (userExists) {
+      setError("Email already registered!");
+      return;
+    }
+    const newUser = {
+      id: Date.now(),
+      firstName: formData.firstName,
+      lastName: formData.lastName,
+      email: formData.email,
+      password: formData.password,
+      address: "",
+      cart: [],
+      wishlist: [],
+    };
+    users.push(newUser);
+    localStorage.setItem("userData", JSON.stringify(users));
+    alert("Account Created Successfully!");
     navigate("/login");
   };
 
@@ -69,9 +89,19 @@ function Signup() {
             <div className="input-box">
               <input
                 type="text"
-                name="name"
-                value={formData.name}
-                placeholder="Name"
+                name="firstName"
+                value={formData.firstName}
+                placeholder="First Name"
+                onChange={handleChange}
+                required
+              />
+            </div>
+            <div className="input-box">
+              <input
+                type="text"
+                name="lastName"
+                value={formData.lastName}
+                placeholder="Last Name"
                 onChange={handleChange}
                 required
               />

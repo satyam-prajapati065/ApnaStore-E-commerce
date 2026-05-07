@@ -1,0 +1,145 @@
+.profile-content {
+    width: 100%;
+    margin-top: 2rem;
+    padding: 0 20px;
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 40px;
+    font-size: 14px;
+}
+
+.welcome-msg span {
+    color: #db4444;
+}
+
+.profile-content {
+    display: flex;
+    gap: 60px;
+}
+
+/* Sidebar Styling */
+.sidebar {
+    width: 250px;
+}
+
+.sidebar-section {
+    margin-bottom: 25px;
+}
+
+.sidebar-section h3 {
+    font-size: 16px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding-left: 20px;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+    color: #7d7d7d;
+    cursor: pointer;
+}
+
+.sidebar li.active {
+    color: #db4444;
+}
+
+/* Form Card Styling */
+.edit-profile-card {
+    flex: 1;
+    background: #fff;
+    padding: 40px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+}
+
+.form-title {
+    color: #db4444;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 25px;
+}
+
+.profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.input-group label {
+    font-size: 14px;
+}
+
+.profile-form input {
+    background: #f5f5f5;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 4px;
+    outline: none;
+}
+
+.password-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.password-section label {
+    font-size: 14px;
+    margin-bottom: -5px;
+}
+
+/* Actions */
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 30px;
+    margin-top: 10px;
+}
+
+.cancel-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.save-btn {
+    background-color: #db4444;
+    color: white;
+    border: none;
+    padding: 16px 40px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .profile-content {
+        flex-direction: column;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+}

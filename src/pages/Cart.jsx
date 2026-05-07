@@ -115,7 +115,10 @@ function Cart() {
               <span>Total:</span>
               <span>${total}</span>
             </div>
-            <button className="btn-primary full-width">
+            <button
+              className="btn-primary full-width"
+              onClick={() => navigate("/checkout", { state: { total } })}
+            >
               Process to checkout
             </button>
           </div>

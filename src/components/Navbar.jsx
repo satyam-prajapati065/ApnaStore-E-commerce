@@ -118,9 +118,9 @@ export default function Navbar({ search, setSearch }) {
                   <div className="user-dropdown-box">
                     <p className="user-name">
                       <User size={18} strokeWidth={2.5} />
-                      {user.name.toUpperCase()}
+                      {user.firstName.toUpperCase()}
                     </p>
-                    <Link to="/profile" className="dropdown-item">
+                    <Link to="/profileedit" className="dropdown-item">
                       <Settings size={18} /> Manage My Account
                     </Link>
                     <Link to="/orders" className="dropdown-item">

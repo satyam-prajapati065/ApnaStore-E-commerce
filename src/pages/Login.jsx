@@ -21,24 +21,22 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
-
     const savedData = localStorage.getItem("userData");
-
     if (!savedData) {
       setError("No user database found! Please Sign Up first.");
       return;
     }
-
-    const user = JSON.parse(savedData);
-
-    if (user.email === formData.email && user.password === formData.password) {
-      alert(`Welcome Back ${user.name}!`);
+    const users = JSON.parse(savedData);
+    const user = users.find(
+      (u) => u.email === formData.email && u.password === formData.password,
+    );
+    if (user) {
+      alert(`Welcome Back ${user.firstName}!`);
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("currentUser", JSON.stringify(user));
-
       navigate("/");
     } else {
-      setError("Incorrect email or password combination!");
+      setError("Incorrect email or password!");
     }
   };
 

@@ -15,6 +15,9 @@ import Login from "./pages/Login";
 import SearchingElements from "./components/SearchingElements";
 import Wishlist from "./pages/Wishlist";
 import RequireAuth from "./components/RequireAuth";
+import About from "./pages/About";
+import Checkout from "./pages/Checkout";
+import ProfileEdit from "./pages/ProfileEdit";
 
 function App() {
   const [search, setSearch] = useState("");
@@ -39,6 +42,9 @@ function App() {
           <Route path="/category/:category" element={<CategoryPage />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/checkout" element={<Checkout />} />
+          <Route path="profileedit" element={<ProfileEdit />} />
           <Route path="/login" element={<Login />} />
           <Route
             path="/wishlist"

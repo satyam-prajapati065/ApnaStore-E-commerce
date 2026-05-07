@@ -2,34 +2,29 @@ import { configureStore } from "@reduxjs/toolkit";
 import cartReducer from "./cartSlice";
 import wishlistReducer from "./wishlistSlice";
 
-// Current user
+// current user
 const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-// Dynamic keys
-const cartKey = currentUser ? `cart_${currentUser.email}` : "cart_guest";
-
-const wishlistKey = currentUser
-  ? `wishlist_${currentUser.email}`
-  : "wishlist_guest";
-
-// LocalStorage data load
+// load state
 const loadState = () => {
   try {
     return {
       cart: {
-        cartItems: JSON.parse(localStorage.getItem(cartKey)) || [],
+        cartItems: currentUser?.cart || [],
       },
 
       wishlist: {
-        wishlistItems: JSON.parse(localStorage.getItem(wishlistKey)) || [],
+        wishlistItems: currentUser?.wishlist || [],
       },
     };
-  } catch{
+  } catch (error) {
+    console.log(error);
+
     return undefined;
   }
 };
 
-// Store create
+// store
 export const store = configureStore({
   reducer: {
     cart: cartReducer,
@@ -39,17 +34,31 @@ export const store = configureStore({
   preloadedState: loadState(),
 });
 
-// LocalStorage me save
+// save state
 store.subscribe(() => {
   try {
     const state = store.getState();
 
-    localStorage.setItem(cartKey, JSON.stringify(state.cart.cartItems));
+    let users = JSON.parse(localStorage.getItem("userData")) || [];
 
-    localStorage.setItem(
-      wishlistKey,
-      JSON.stringify(state.wishlist.wishlistItems),
-    );
+    let current = JSON.parse(localStorage.getItem("currentUser"));
+
+    if (!current) return;
+
+    const updatedUser = {
+      ...current,
+      cart: state.cart.cartItems,
+      wishlist: state.wishlist.wishlistItems,
+    };
+
+    localStorage.setItem("currentUser", JSON.stringify(updatedUser));
+    const userIndex = users.findIndex((u) => u.id === current.id);
+
+    if (userIndex !== -1) {
+      users[userIndex] = updatedUser;
+
+      localStorage.setItem("userData", JSON.stringify(users));
+    }
   } catch (error) {
     console.log(error);
   }
