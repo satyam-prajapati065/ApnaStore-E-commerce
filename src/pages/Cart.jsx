@@ -3,11 +3,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { useNavigate } from "react-router-dom";
 import Support from "../components/Support";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  ADD_TO_CART,
-  INCREMENT_QUANTITY,
-  DECREMENT_QUANTITY,
-} from "../Redux/cartSlice";
+import { INCREMENT_QUANTITY, DECREMENT_QUANTITY } from "../Redux/cartSlice";
 
 function Cart() {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -49,7 +45,7 @@ function Cart() {
               ) : (
                 cartItems.map((item) => (
                   <tr key={item.id}>
-                    <td className="product-info">
+                    <td className="product-info" data-label="Product">
                       <img
                         src={item.thumbnail}
                         style={{ border: "1px solid #ccc" }}
@@ -57,8 +53,10 @@ function Cart() {
                       />
                       <span>{item.title}</span>
                     </td>
-                    <td className="price">${item.price}</td>
-                    <td>
+                    <td className="price" data-label="Price">
+                      ${item.price}
+                    </td>
+                    <td data-label="Quantity">
                       <div className="quantity-container">
                         <button
                           className="quantity-btn"
@@ -79,7 +77,9 @@ function Cart() {
                         </button>
                       </div>
                     </td>
-                    <td>${(item.quantity * item.price).toFixed(2)}</td>
+                    <td data-label="Subtotal">
+                      ${(item.quantity * item.price).toFixed(2)}
+                    </td>
                   </tr>
                 ))
               )}
