@@ -28,7 +28,7 @@ function ProductCard({ product }) {
             onClick={() => navigate(`/product/${product?.id}`)}
             style={{ cursor: "pointer" }}
           >
-            <Eye />
+            <Eye className="small-icons" />
           </div>
           <button
             className="icons"
@@ -38,7 +38,11 @@ function ProductCard({ product }) {
                 : navigate("/login");
             }}
           >
-            {isWishlisted ? <Heart fill="red" color="red" /> : <Heart />}
+            {isWishlisted ? (
+              <Heart fill="red" color="red" className="small-icons" />
+            ) : (
+              <Heart className="small-icons" />
+            )}
           </button>
         </div>
       </div>

@@ -30,10 +30,7 @@ function Wishlist() {
           <div
             className="cart-box1"
             style={{
-              display: "flex",
-              gap: "30px",
               width: "100%",
-              overflow: "scroll hidden",
               height: "auto",
               padding: "1rem",
             }}

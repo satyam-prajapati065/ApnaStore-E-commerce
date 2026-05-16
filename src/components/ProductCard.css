@@ -82,8 +82,6 @@
 }
 
 .cart-down {
-    padding-top: 16px;
-    padding-left: 10px;
     padding: 16px 10px 16px 10px;
     display: flex;
     flex-direction: column;
@@ -140,4 +138,66 @@
     font-size: 14px;
     font-weight: 600;
     margin: 0;
+}
+
+@media (max-width: 768px) {
+    .cart-container {
+        width: 115px;
+        height: 190px;
+
+    }
+
+    .cart-up {
+        height: 125px;
+        width: 115px;
+    }
+
+    .cart-icons {
+        right: 5px;
+    }
+
+    .icons {
+        height: 15px;
+        width: 15px;
+    }
+
+    .small-icons {
+        height: 12px;
+        width: 12px;
+    }
+
+    .cart-down {
+        padding:5px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .cart-title,
+    .price {
+        font-size: 0.7rem;
+    }
+
+    .dis-price {
+        font-size: 0.5rem;
+    }
+
+    .five-star svg {
+        width: 10px;
+        height: 10px;
+    }
+
+    .total-rating {
+        font-size: 0.5rem;
+    }
+
+    .price-box {
+        margin: 0px;
+    }
+
+    .rating-box {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 }

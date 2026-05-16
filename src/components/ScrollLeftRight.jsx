@@ -45,11 +45,11 @@ function ScrollLeftRight({
 
         <div className="left-right-toggle">
           <button onClick={() => scroll("left")} disabled={page === 1}>
-            <ArrowLeftIcon />
+            <ArrowLeftIcon className="iconleftRight" />
           </button>
 
           <button onClick={() => scroll("right")}>
-            <ArrowRightIcon />
+            <ArrowRightIcon className="iconleftRight" />
           </button>
         </div>
       </div>
