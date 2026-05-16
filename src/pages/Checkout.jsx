@@ -1,13 +1,36 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Checkout.css";
 import Breadcrumbs from "../components/Breadcrumbs";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { useLocation, useNavigate } from "react-router-dom";
+import { RESET_CART, CLEAR_BUY_NOW } from "../Redux/cartSlice";
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const location = useLocation();
-  const totalPrice = location.state;
+  const [finalItems, setFinalItems] = useState([]);
+  const totalPrice = location.state.total;
+  const buyItems = location.state.buyItem;
+
+  useEffect(() => {
+    if (buyItems) {
+      setFinalItems([buyItems]);
+    } else {
+      setFinalItems(cartItems);
+    }
+  }, [buyItems, cartItems]);
+
+  const placeOrder = () => {
+    alert("Order Placed Successfully!!");
+    if (buyItems) {
+      dispatch(CLEAR_BUY_NOW());
+    } else {
+      dispatch(RESET_CART());
+    }
+    navigate("/");
+  };
   return (
     <div className="checkout-container">
       <nav className="breadcrumbs">
@@ -73,7 +96,7 @@ const Checkout = () => {
 
         <div className="order-summary">
           <div className="cart-items">
-            {cartItems.map((item) => (
+            {finalItems.map((item) => (
               <div className="checkout-item" key={item.id}>
                 <div className="item-info">
                   <img
@@ -92,7 +115,7 @@ const Checkout = () => {
           <div className="pricing">
             <div className="price-row">
               <span>Subtotal:</span>
-              <span>${totalPrice?.total}</span>
+              <span>${totalPrice}</span>
             </div>
             <hr />
             <div className="price-row">
@@ -102,7 +125,7 @@ const Checkout = () => {
             <hr />
             <div className="price-row total">
               <span>Total:</span>
-              <span>${totalPrice?.total}</span>
+              <span>${totalPrice}</span>
             </div>
           </div>
 
@@ -125,7 +148,9 @@ const Checkout = () => {
             <button className="apply-btn">Apply Coupon</button>
           </div>
 
-          <button className="place-order-btn">Place Order</button>
+          <button className="place-order-btn" onClick={placeOrder}>
+            Place Order
+          </button>
         </div>
       </div>
     </div>

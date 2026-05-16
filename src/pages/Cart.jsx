@@ -117,7 +117,9 @@ function Cart() {
             </div>
             <button
               className="btn-primary full-width"
-              onClick={() => navigate("/checkout", { state: { total } })}
+              onClick={() =>
+                navigate("/checkout", { state: { total, buyItems: cartItems } })
+              }
             >
               Process to checkout
             </button>

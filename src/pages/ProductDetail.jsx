@@ -12,6 +12,7 @@ import {
   ADD_TO_CART,
   INCREMENT_QUANTITY,
   DECREMENT_QUANTITY,
+  BUY_NOW,
 } from "../Redux/cartSlice";
 import { TOGGLE } from "../Redux/wishlistSlice";
 import ScrollLeftRight from "../components/ScrollLeftRight";
@@ -22,7 +23,8 @@ function ProductDetail() {
   const wishlists = useSelector((state) => state.wishlist.wishlistItems);
   const wishlistDispatch = useDispatch();
 
-  const cartItems = useSelector((state) => state.cart.cartItems);
+  // const cartItems = useSelector((state) => state.cart.cartItems);
+  const { cartItems, buyNowItem } = useSelector((state) => state.cart);
   const cartDispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -245,7 +247,28 @@ function ProductDetail() {
                   </button>
                 )}
 
-                <button className="buy-now-btn">Buy Now</button>
+                <button
+                  className="buy-now-btn"
+                  onClick={() => {
+                    if (!isLoggedIn) return navigate("/login");
+
+                    const product = {
+                      ...currentProduct,
+                      quantity: 1,
+                    };
+
+                    cartDispatch(BUY_NOW(product));
+
+                    navigate("/checkout", {
+                      state: {
+                        total: currentProduct.price,
+                        buyItem: product,
+                      },
+                    });
+                  }}
+                >
+                  Buy Now
+                </button>
                 <button
                   className="wishlist-btn"
                   onClick={() => wishlistDispatch(TOGGLE(currentProduct))}
