@@ -3,13 +3,14 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { SET_CART } from "../Redux/cartSlice";
 import { SET_WISHLIST } from "../Redux/wishlistSlice";
+import Modal from "../components/Modal";
 
 function Login() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const [modal, setModal] = useState({ open: false, type: "", msg: "" });
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -45,19 +46,32 @@ function Login() {
     );
 
     if (user) {
-      alert(`Welcome Back ${user.firstName}!`);
+      setModal({
+        open: true,
+        type: `success`,
+        msg: `Welcome Back ${user.firstName}!`,
+      });
+
       localStorage.setItem("isLoggedIn", "true");
       localStorage.setItem("currentUser", JSON.stringify(user));
       dispatch(SET_CART(user.cart || []));
       dispatch(SET_WISHLIST(user.wishlist || []));
-      navigate("/");
     } else {
       setError("Incorrect email or password!");
     }
   };
-
+  const closeModal = () => {
+    setModal({ ...modal, open: false });
+    if (modal.type === "success") navigate("/");
+  };
   return (
     <div className="signup-container">
+      <Modal
+        isOpen={modal.open}
+        type={modal.type}
+        message={modal.msg}
+        onClose={closeModal}
+      />
       <div className="signup-img-container">
         <img
           src="https://lifelinemedicalsupply.net/static/media/authimg.3e68db7c28df1d985f02.png"

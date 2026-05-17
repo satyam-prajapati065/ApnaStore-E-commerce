@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ProfileEdit.css";
 import Breadcrumbs from "../components/Breadcrumbs";
+import Modal from "../components/Modal";
 
 const ProfileEdit = () => {
   const user = JSON.parse(localStorage.getItem("currentUser")) || {};
@@ -13,6 +14,7 @@ const ProfileEdit = () => {
     password: "",
     confirmPass: "",
   });
+  const [modal, setModal] = useState({ open: false, type: "", msg: "" });
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -36,11 +38,24 @@ const ProfileEdit = () => {
       localStorage.setItem("userData", JSON.stringify(allUsers));
     }
     localStorage.setItem("currentUser", JSON.stringify(updatedUser));
-    alert("Profile Updated!");
-    window.location.reload();
+    setModal({
+      open: true,
+      type: `success`,
+      msg: `Profile Updated!!`,
+    });
+  };
+  const closeModal = () => {
+    setModal({ ...modal, open: false });
+    if (modal.type === "success") window.location.reload();
   };
   return (
     <div className="profile-container">
+      <Modal
+        isOpen={modal.open}
+        type={modal.type}
+        message={modal.msg}
+        onClose={closeModal}
+      />
       <div className="profile-header">
         <nav className="breadcrumb">
           <Breadcrumbs />

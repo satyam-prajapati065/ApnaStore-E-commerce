@@ -4,6 +4,7 @@ import Breadcrumbs from "../components/Breadcrumbs";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RESET_CART, CLEAR_BUY_NOW } from "../Redux/cartSlice";
+import Modal from "../components/Modal";
 
 const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.cartItems);
@@ -13,6 +14,7 @@ const Checkout = () => {
   const [finalItems, setFinalItems] = useState([]);
   const totalPrice = location.state.total;
   const buyItems = location.state.buyItem;
+  const [modal, setModal] = useState({ open: false, type: "", msg: "" });
 
   useEffect(() => {
     if (buyItems) {
@@ -23,16 +25,29 @@ const Checkout = () => {
   }, [buyItems, cartItems]);
 
   const placeOrder = () => {
-    alert("Order Placed Successfully!!");
+    setModal({
+      open: true,
+      type: `success`,
+      msg: `Order Placed Successfully!!`,
+    });
     if (buyItems) {
       dispatch(CLEAR_BUY_NOW());
     } else {
       dispatch(RESET_CART());
     }
-    navigate("/");
+  };
+  const closeModal = () => {
+    setModal({ ...modal, open: false });
+    if (modal.type === "success") navigate("/");
   };
   return (
     <div className="checkout-container">
+      <Modal
+        isOpen={modal.open}
+        type={modal.type}
+        message={modal.msg}
+        onClose={closeModal}
+      />
       <nav className="breadcrumbs">
         <Breadcrumbs />
       </nav>

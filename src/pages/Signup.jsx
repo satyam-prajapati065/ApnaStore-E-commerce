@@ -1,5 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import Modal from "../components/Modal";
 
 function Signup() {
   const [formData, setFormData] = useState({
@@ -9,6 +10,7 @@ function Signup() {
     password: "",
   });
   const [error, setError] = useState("");
+  const [modal, setModal] = useState({ open: false, type: "", msg: "" });
 
   const navigate = useNavigate();
 
@@ -64,12 +66,24 @@ function Signup() {
     };
     users.push(newUser);
     localStorage.setItem("userData", JSON.stringify(users));
-    alert("Account Created Successfully!");
-    navigate("/login");
+    setModal({
+      open: true,
+      type: `success`,
+      msg: `Account Created Successfully!!`,
+    });
   };
-
+  const closeModal = () => {
+    setModal({ ...modal, open: false });
+    if (modal.type === "success") navigate("/login");
+  };
   return (
     <div className="signup-container">
+      <Modal
+        isOpen={modal.open}
+        type={modal.type}
+        message={modal.msg}
+        onClose={closeModal}
+      />
       <div className="signup-img-container">
         <img
           src="https://lifelinemedicalsupply.net/static/media/authimg.3e68db7c28df1d985f02.png"
