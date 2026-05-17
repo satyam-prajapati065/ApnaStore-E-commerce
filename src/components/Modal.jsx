@@ -13,9 +13,9 @@ const Modal = ({ isOpen, type, message, onClose }) => {
 
         <div className="modal-body">
           {type === "success" ? (
-            <CheckCircle size={50} color="#10b981" />
+            <CheckCircle size={50} color="#DB4444" />
           ) : (
-            <XCircle size={50} color="#ef4444" />
+            <XCircle size={50} color="red" />
           )}
           <h3>{type === "success" ? "Success!" : "Error!"}</h3>
           <p>{message}</p>
@@ -23,7 +23,7 @@ const Modal = ({ isOpen, type, message, onClose }) => {
             className="primary-btn"
             style={{
               marginTop: "20px",
-              background: type === "success" ? "#10b981" : "#ef4444",
+              background: type === "success" ? "#DB4444" : "red",
             }}
             onClick={onClose}
           >
